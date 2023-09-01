@@ -25,19 +25,78 @@ This is a sample image, to show how to add images to your page. To learn more op
 -  E/19/253, N.K.B.I.U. Narasinghe, [e19253@eng.pdn.ac.lk](mailto:e19253@eng.pdn.ac.lk)
 
 ## Table of Contents
-1. [Introduction](#introduction)
-2. [Other Sub Topics](#other-sub-topics)
-3. [Links](#links)
+- [Introduction](#introduction)
+- [Intended Users](#intended-users)
+  - [Participant](#participant)
+  - [Staff Development Centre](#staff-development-centre)
+  - [Resource Person](#resource-person)
+- [Tech Stack](#tech-stack)
+  - [Front End](#front-end)
+  - [Back End](#back-end) 
+- [Links](#links)
 
 ---
 
 ## Introduction
 
- description of the real world problem and solution, impact
+### Problem 🔍
 
-## Other Sub Topics
+### Proposed Solution 💡
 
-.....
+## Intended Users
+
+### Participant
+
+### Staff Development Centre
+
+### Resource Person
+
+## Tech Stack
+
+### Front End
+
+Technologies Used: React, Javascript, HTML5, TailwindCSS
+
+<img src="https://github.com/cepdnaclk/e19-co227-Training-Management-System/assets/115539769/bbd355ed-5e9b-4b2c-af92-08d67e31510f" width=550 />
+
+#### React :
+- React is a popular JavaScript library for building user interfaces.
+- It allows developers to create reusable UI components and efficiently manage the dynamic rendering of data-driven views in web applications.
+
+#### JavaScript :
+- JavaScript is a versatile programming language primarily used for web development.
+- It enables interactive and dynamic content on websites, offering capabilities for both front-end and back-end development through frameworks like <b>Node.js.</b>
+
+#### Tailwind CSS :
+- Tailwind CSS is a utility-first CSS framework that streamlines web development by providing a set of pre-designed classes to style elements.
+- It enables rapid UI design and customization while promoting consistency in styling across projects.
+
+#### HTML5 :
+- HTML5 is the latest version of Hypertext Markup Language, used to structure and present content on the web.
+- It introduces new features like semantic elements, multimedia support, and improved forms for enhanced user experiences.
+
+### Back End
+
+Technologies Used: Springboot, Node.js, Spring Security, JSON Web Token
+
+<img src="https://github.com/cepdnaclk/e19-co227-Training-Management-System/assets/115539769/6af74a5a-de8f-40ad-86ec-eafb0414a91e" width=550 />
+
+#### Spring Boot :
+- Spring Boot is a Java-based framework that simplifies the process of building production-ready web applications.
+- It provides a set of tools and conventions for rapid development and easy configuration.
+
+#### Node.js :
+- Node.js is a server-side JavaScript runtime environment.
+- It allows developers to build scalable and high-performance network applications, making it well-suited for creating real-time web applications.
+
+#### Spring Security:
+
+- Robust Authentication and Authorization: Spring Security is a powerful framework for building secure Java applications, offering robust authentication and authorization features to protect resources and control access.
+
+#### JSON Web Token (JWT):
+
+- Token-based Authentication: JWT is a compact, self-contained token format commonly used for authentication and authorization in web applications. 
+- It securely stores information and is widely adopted for stateless authentication and data sharing.
 
 ## Links
 
@@ -45,7 +104,3 @@ This is a sample image, to show how to add images to your page. To learn more op
 - [Project Page](https://cepdnaclk.github.io/{{ page.repository-name}}){:target="_blank"}
 - [Department of Computer Engineering](http://www.ce.pdn.ac.lk/)
 - [University of Peradeniya](https://eng.pdn.ac.lk/)
-
-
-[//]: # (Please refer this to learn more about Markdown syntax)
-[//]: # (https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
