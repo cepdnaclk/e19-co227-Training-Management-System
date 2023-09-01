@@ -3,13 +3,12 @@ layout: home
 permalink: index.html
 
 # Please update this with your repository name and title
-repository-name: eYY-XXX-project-template
-title:
+repository-name: e19-co227-Training-Management-System
+title: Training Management System
 ---
 
-[comment]: # "This is the standard layout for the project, but you can clean this and use your own template"
 
-# Project Title
+# Training Management System
 
 ---
 
@@ -20,9 +19,10 @@ This is a sample image, to show how to add images to your page. To learn more op
  -->
 
 ## Team
--  eNumber, Name, [email](mailto:name@email.com)
--  eNumber, Name, [email](mailto:name@email.com)
--  eNumber, Name, [email](mailto:name@email.com)
+-  E/19/095, E.M.L.K. Edirisinghe, [e19095@eng.pdn.ac.lk](mailto:e19095@eng.pdn.ac.lk)
+-  E/19/155, B.R.U.K. Jayarathna, [e19155@eng.pdn.ac.lk](mailto:e19155@eng.pdn.ac.lk)
+-  E/19/163, J.M.E.G. Jayasundara, [e19163@eng.pdn.ac.lk](mailto:e19163@eng.pdn.ac.lk)
+-  E/19/253, N.K.B.I.U. Narasinghe, [e19253@eng.pdn.ac.lk](mailto:e19253@eng.pdn.ac.lk)
 
 ## Table of Contents
 1. [Introduction](#introduction)
