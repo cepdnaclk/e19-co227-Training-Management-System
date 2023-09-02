@@ -12,13 +12,7 @@ title: Training Management System
 
 ---
 
-<!-- 
-This is a sample image, to show how to add images to your page. To learn more options, please refer [this](https://projects.ce.pdn.ac.lk/docs/faq/how-to-add-an-image/)
-
-![Sample Image](./images/sample.png)
- -->
-
-## Team
+## Team 👥
 -  E/19/095, E.M.L.K. Edirisinghe, [e19095@eng.pdn.ac.lk](mailto:e19095@eng.pdn.ac.lk)
 -  E/19/155, B.R.U.K. Jayarathna, [e19155@eng.pdn.ac.lk](mailto:e19155@eng.pdn.ac.lk)
 -  E/19/163, J.M.E.G. Jayasundara, [e19163@eng.pdn.ac.lk](mailto:e19163@eng.pdn.ac.lk)
@@ -39,9 +33,33 @@ This is a sample image, to show how to add images to your page. To learn more op
 
 ## Introduction
 
+<b>Training Management System</b> of the Staff Development Centre(SDC) in University of Peradeniya, helps staff members to learn and grow their professional carrier, through various activities. 
+But the Training Management System currently lacks an automation system. 
+The objective of this project is to design and develop an automation system for the training management system at SDC.
+
 ### Problem 🔍
 
-### Proposed Solution 💡
+The Staff Development Centre faces challenges due to <b>manual and fragmented processes in managing training programs</b>.
+
+- Inefficient participant registrations
+- Complicated scheduling
+- Resource allocation difficulties
+- Inconsistent feedback collection
+- Limited performance tracking capabilities
+
+### Proposed Solution💡
+
+Design and develop an automation system that addresses the following specific challenges.
+
+- Centralized Training Management System
+- Efficient Participant Registration
+- Resource Allocation Optimization
+- Automated Feedback Collection
+- Performance Tracking System
+- Reporting and Analytics Tools
+- User-Friendly Interface
+
+---
 
 ## Intended Users
 
@@ -50,6 +68,8 @@ This is a sample image, to show how to add images to your page. To learn more op
 ### Staff Development Centre
 
 ### Resource Person
+
+---
 
 ## Tech Stack
 
@@ -97,6 +117,8 @@ Technologies Used: Springboot, Node.js, Spring Security, JSON Web Token
 
 - Token-based Authentication: JWT is a compact, self-contained token format commonly used for authentication and authorization in web applications. 
 - It securely stores information and is widely adopted for stateless authentication and data sharing.
+
+---
 
 ## Links
 
