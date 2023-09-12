@@ -1,12 +1,16 @@
-import React from 'react'
+import React from "react";
+import {Route, Routes} from "react-router-dom";
+
+import UserRegistration from "./Register_Files/UserRegistration";
 
 function App() {
-
   return (
     <>
-      <h1 className="text-4xl font-bold underline">Front End</h1>
+      <Routes>
+        <Route path="/user" element={<UserRegistration />} />
+      </Routes>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
