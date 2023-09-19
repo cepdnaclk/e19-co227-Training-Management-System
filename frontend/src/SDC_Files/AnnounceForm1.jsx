@@ -1,20 +1,10 @@
-import React, {useState} from "react";
+import React, { useState } from 'react';
 
-const AnnounceForm1 = ({onSubmit}) => {
+const AnnounceForm1 = ({ onSubmit, dropdownCourses, facultyName }) => {
   const [selectedCourse, setSelectedCourse] = useState("");
   const [selectedNames, setSelectedNames] = useState([]);
-
-  const courses = ["Course 1", "Course 2", "Course 3", "Course 4"];
-  const names = [
-    "Name 1",
-    "Name 2",
-    "Name 3",
-    "Name 4",
-    "Name 5",
-    "Name 6",
-    "Name 7",
-    "Name 8",
-  ];
+  
+  const names = facultyName
 
   const handleCourseChange = (e) => {
     setSelectedCourse(e.target.value);
@@ -56,7 +46,7 @@ const AnnounceForm1 = ({onSubmit}) => {
           <option value="" disabled defaultValue>
             Select a course
           </option>
-          {courses.map((course) => (
+          {dropdownCourses.map((course) => (
             <option key={course} value={course}>
               {course}
             </option>
