@@ -1,5 +1,5 @@
 import React from "react";
-import {useState} from "react";
+import {useState, useEffect} from "react";
 
 import SDCNavbar from "./SDCNavbar";
 
@@ -11,7 +11,7 @@ export default function CallingApplicants() {
   const [courses, setCourses] = useState([]);
 
   const [step, setStep] = useState(1);
-  const [selectedCourse, setSelectedCourse] = useState(null);
+  const [selectedCourseID, setSelectedCourseID] = useState();
 
   useEffect(() => {
     fetchCourses();
@@ -26,10 +26,9 @@ export default function CallingApplicants() {
         const jsonData = await response.json();
         const courseData = jsonData.map((item) => ({
           courseID: item.id,
-          CourseName: item.fullname,
+          courseName: item.fullname,
         }));
         setCourses(courseData);
-        console.log("CourseData:", courseData);
       } else {
         console.error("Failed to fetch data");
       }
@@ -41,9 +40,8 @@ export default function CallingApplicants() {
   //Check whether form 1 is submitted
   const handleForm1Submit = (data) => {
     //Set the course name and names of the faculties into local state
-    setSelectedCourse(data);
-
-    console.log(data);
+    setSelectedCourseID(data);
+    console.log("ID",data);
 
     setStep(2);
   };

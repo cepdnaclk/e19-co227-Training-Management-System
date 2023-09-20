@@ -2,15 +2,16 @@ import React from "react";
 import {useState} from "react";
 
 const ApplicantForm1 = ({onSubmit, dropdownCourses}) => {
-  const [selectedCourse, setSelectedCourse] = useState();
+  const [selectedCourseID, setSelectedCourseID] = useState('');
 
   const handleCourseChange = (e) => {
-    setSelectedCourse(e.target.value);
+    const courseID = e.target.value
+    setSelectedCourseID(courseID);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit({selectedCourse});
+    onSubmit(selectedCourseID);
   };
 
   return (
@@ -19,7 +20,7 @@ const ApplicantForm1 = ({onSubmit, dropdownCourses}) => {
       <div className="mb-4">
         <select
           className="block w-full p-2 border rounded-lg"
-          value={selectedCourse}
+          value={selectedCourseID}
           onChange={handleCourseChange}
           required
         >
@@ -27,8 +28,8 @@ const ApplicantForm1 = ({onSubmit, dropdownCourses}) => {
             Select a course
           </option>
           {dropdownCourses.map((course) => (
-            <option key={course.courseID} value={course.CourseName}>
-              {course.CourseName}
+            <option key={course.courseID} value={course.courseID}>
+              {course.courseName}
             </option>
           ))}
         </select>
