@@ -8,6 +8,7 @@ import UserRegistration from "./Register_Files/UserRegistration";
 import SDCDashboard from "./SDC_Files/SDCDashboard";
 import AnnounceCourse from "./SDC_Files/AnnounceCourse";
 import Application from "./Applications/Application";
+import CallingApplicants from "./SDC_Files/CallingApplicants";
 
 function App() {
   return (
@@ -19,7 +20,11 @@ function App() {
 
         <Route path="/sdc/dashboard" element={<SDCDashboard />} />
         <Route path="/sdc/announce" element={<AnnounceCourse />} />
-        <Route path="/sdc/application/:course_id/:applicant_id" element={<Application />} />
+        <Route path="/sdc/invite" element={<CallingApplicants />} />
+        <Route
+          path="/sdc/application/:course_id/:applicant_id"
+          element={<Application />}
+        />
       </Routes>
     </>
   );

@@ -26,6 +26,7 @@ function UserNavbar() {
   const NavMenus = [
     {title: "Dashboard", path: "/sdc/dashboard"},
     {title: "Announce", path: "/sdc/announce"},
+    {title: "Invite", path: "/sdc/invite"},
   ];
 
   return (
