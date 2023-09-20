@@ -40,7 +40,7 @@ Staff Development Center
 
     console.log(postData)
 
-    axios.post("http://localhost:8080/faculty/email/send", postData)
+    axios.post("http://localhost:8080/email/send", postData)
       .then(response => {
         console.log('POST response:', response.data);
         alert("Mails Sent")
@@ -54,7 +54,6 @@ Staff Development Center
 
   return (
     <div>
-      {/* {console.log(deanData)} */}
       <div className="flex flex-wrap pt-5">
         {
           deanData.map((e) => (

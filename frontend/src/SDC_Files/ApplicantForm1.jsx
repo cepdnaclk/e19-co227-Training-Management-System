@@ -3,15 +3,20 @@ import {useState} from "react";
 
 const ApplicantForm1 = ({onSubmit, dropdownCourses}) => {
   const [selectedCourseID, setSelectedCourseID] = useState('');
+  const [selectedCourseName, setSelectedCourseName] = useState('');
 
   const handleCourseChange = (e) => {
     const courseID = e.target.value
-    setSelectedCourseID(courseID);
+    const selectedCourse = dropdownCourses.find(course => course.courseID == courseID);
+
+    setSelectedCourseID(courseID)
+    setSelectedCourseName(selectedCourse.courseName);
+    //console.log(selectedCourse.courseName)
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(selectedCourseID);
+    onSubmit({ selectedCourseID, selectedCourseName });
   };
 
   return (

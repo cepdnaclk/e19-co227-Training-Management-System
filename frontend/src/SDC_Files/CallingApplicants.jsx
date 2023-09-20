@@ -12,6 +12,7 @@ export default function CallingApplicants() {
 
   const [step, setStep] = useState(1);
   const [selectedCourseID, setSelectedCourseID] = useState();
+  const [selectedCourseName, setSelectedCourseName] = useState();
 
   useEffect(() => {
     fetchCourses();
@@ -40,10 +41,39 @@ export default function CallingApplicants() {
   //Check whether form 1 is submitted
   const handleForm1Submit = (data) => {
     //Set the course name and names of the faculties into local state
-    setSelectedCourseID(data);
-    console.log("ID",data);
 
+    setSelectedCourseID(data.selectedCourseID);
+    setSelectedCourseName(data.selectedCourseName);
+    fetchApplication(data.selectedCourseID)
     setStep(2);
+  };
+
+  //Take application details
+  const [applicationData, setApplicationData] = useState();
+
+  const fetchApplication = async (courseIDValue) => {
+    try {
+      const response = await fetch(`http://localhost:8080/application/get/${courseIDValue}`);
+
+      if (response.ok) {
+        const jsonData = await response.json();
+        const applicationDataMap = jsonData.map(item => ({
+          link: item.link,
+          applicantEmail: item.sdcApplicant.email,
+          applicantName: item.sdcApplicant.name,
+        }));
+        
+        setApplicationData(applicationDataMap)
+      } 
+      
+      else {
+        console.error("Failed to fetch data");
+      }
+    } 
+    
+    catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   return (
@@ -62,7 +92,7 @@ export default function CallingApplicants() {
             dropdownCourses={courses}
           />
 
-          {step === 2 ? <ApplicantForm2 /> : null}
+          {step === 2 ? <ApplicantForm2 applicationData={applicationData} courseName={selectedCourseName }/> : null}
         </div>
       </div>
     </>
