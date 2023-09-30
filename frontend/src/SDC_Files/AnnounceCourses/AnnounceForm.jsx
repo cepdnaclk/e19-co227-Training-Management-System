@@ -1,6 +1,5 @@
 // imports
 import { useState } from 'react';
-import CardToAnnouncement from "../Templates/CardToAnnouncement";
 import { TbSend } from "react-icons/tb";
 import axios from 'axios';
 
@@ -10,6 +9,7 @@ const AnnounceForm1 = ({ onSubmit, dropdownCourses, facultyName, deanData, selec
   // useStates
   const [selectedCourse, setSelectedCourse] = useState("");
   const [selectedNames, setSelectedNames] = useState([]);
+  const [selectAll, setSelectAll] = useState(false);
 
   // constants
   const names = facultyName;
@@ -68,11 +68,11 @@ const AnnounceForm1 = ({ onSubmit, dropdownCourses, facultyName, deanData, selec
       subject: mailSubject,
     }));
 
-    // console.log(postData)
+    console.log(postData)
 
     axios.post("http://localhost:8080/email/send", postData)
       .then(response => {
-        // console.log('POST response:', response.data);
+        console.log('POST response:', response.data);
         alert("Mails Sent")
       })
 
@@ -81,13 +81,26 @@ const AnnounceForm1 = ({ onSubmit, dropdownCourses, facultyName, deanData, selec
       });
   };
 
+  const handleSelectAll = () => {
+    if (selectAll) {
+      setSelectedNames([]);
+    } else {
+      const allNames = deanData.map((name) => name.name);
+      setSelectedNames(allNames);
+    }
+    setSelectAll(!selectAll);
+  };
+
   // html, css, js all together -> typeScript
   return (
     <form onSubmit={handleSubmit}>
+
       <div className="mb-4">
+
         <label className="text-xl block text-gray-700 font-bold mb-2">
           Select a course:
         </label>
+
         <select
           className="block w-full p-2 border rounded-lg"
           value={selectedCourse}
@@ -103,14 +116,16 @@ const AnnounceForm1 = ({ onSubmit, dropdownCourses, facultyName, deanData, selec
             </option>
           ))}
         </select>
+
       </div>
+
       <div>
         <p className="text-xl text-gray-700 font-bold mb-2">Select Faculties:</p>
-        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        <div className="flex flex-col mt-0 pt-0">
           {deanData.map((name) => (
             <div
               key={name.id}
-              className="p-4 bg-gray-800 rounded-md shadow-xl transition-transform transform hover:scale-105"
+              className="mb-2 p-2 bg-gray-800 rounded-md shadow-xl transition-transform transform hover:scale-105"
             >
               <label className="inline-flex items-center">
                 <input
@@ -120,22 +135,33 @@ const AnnounceForm1 = ({ onSubmit, dropdownCourses, facultyName, deanData, selec
                   onChange={handleNameChange}
                   checked={selectedNames.includes(name.name)}
                 />
-                <span className="ml-2 font-bold text-white">{name.name}</span>
+                <span className="ml-5 font-bold text-white">{name.name}</span>
+                <span className="ml-5 mt-0 text-blue-400">Dean - {name.deanname}</span>
+                <span className="ml-5 mt-0 text-blue-400">Email - {name.email}</span>
               </label>
-              <CardToAnnouncement key={name.id} deanName={name.deanname} deanMail={name.email} />
             </div>
           ))}
         </div>
       </div>
+
       <div className="text-left">
         <button
-          className="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded mt-4"
+          type="button"
+          className="bg-amber-600 hover:bg-amber-800 text-white font-bold py-2 px-4 rounded mt-4"
+          value="Select All"
+          onClick={handleSelectAll}
+        >
+          Select All
+        </button>
+        <button
+          className="bg-green-700 ml-3 hover:bg-green-900 text-white font-bold py-2 px-4 rounded mt-4"
           onClick={sendMails}
         >
           <TbSend className="inline mr-2" />
-          Send All
+          Send
         </button>
       </div>
+      
     </form>
   );
 };

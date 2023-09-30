@@ -129,7 +129,11 @@ export default function SendApplications() {
             applicants={applicants}
           />
 
-          {step === 2 ? <ApplicantForm2 applicationData={applicationData} courseName={selectedCourseName} /> : null}
+          {step === 2 ? <ApplicantForm2
+            applicationData={applicationData}
+            courseName={selectedCourseName} /> 
+            : null
+          }
         </div>
       </div>
     </>
