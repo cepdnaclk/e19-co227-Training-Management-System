@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import axios from "axios";
+import React from "react";
+import {useState} from "react";
 
-const AnnounceForm1 = ({ onSubmit, dropdownCourses, facultyName }) => {
-  const [selectedCourse, setSelectedCourse] = useState("");
+const ApplicantForm1 = ({onSubmit, dropdownCourses, applicants}) => {
+  const [selectedCourseID, setSelectedCourseID] = useState('');
+  const [selectedCourseName, setSelectedCourseName] = useState('');
   const [selectedNames, setSelectedNames] = useState([]);
-  
-  const names = facultyName
 
-  const handleCourseChange = (e) => {
-    setSelectedCourse(e.target.value);
-  };
+  console.log(applicants);
+  const names = applicants;
 
   const handleNameChange = (e) => {
     const name = e.target.value;
@@ -21,25 +21,28 @@ const AnnounceForm1 = ({ onSubmit, dropdownCourses, facultyName }) => {
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleCourseChange = (e) => {
+    const courseID = e.target.value
+    const selectedCourse = dropdownCourses.find(course => course.courseID == courseID);
 
-    if (selectedNames.length === 0) {
-      alert("Select Email Recepients");
-    } else {
-      onSubmit({selectedCourse, selectedNames});
-    }
+    setSelectedCourseID(courseID)
+    setSelectedCourseName(selectedCourse.courseName);
+    //console.log(selectedCourse.courseName)
   };
 
-  return (
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmit({ selectedCourseID, selectedCourseName });
+  };
+
+  return (<>
+    <p className="text-xl text-gray-700 font-bold mb-2">Select a Course:</p>
     <form onSubmit={handleSubmit}>
+      {/* Select course : dropdown */}
       <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2">
-          Select a course:
-        </label>
         <select
           className="block w-full p-2 border rounded-lg"
-          value={selectedCourse}
+          value={selectedCourseID}
           onChange={handleCourseChange}
           required
         >
@@ -47,13 +50,13 @@ const AnnounceForm1 = ({ onSubmit, dropdownCourses, facultyName }) => {
             Select a course
           </option>
           {dropdownCourses.map((course) => (
-            <option key={course} value={course}>
-              {course}
+            <option key={course.courseID} value={course.courseID}>
+              {course.courseName}
             </option>
           ))}
         </select>
       </div>
-      <div>
+      {/* <div>
         <p className="text-gray-700 text-sm font-bold mb-2">Select names:</p>
         {names.map((name) => (
           <div key={name} className="mb-2">
@@ -69,17 +72,20 @@ const AnnounceForm1 = ({ onSubmit, dropdownCourses, facultyName }) => {
             </label>
           </div>
         ))}
-      </div>
-      <div className="text-right">
+      </div> */}
+      {/* Next Button    */}
+      <div className="text-left mb-8">
         <button
           type="submit"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-0"
         >
           Next
         </button>
       </div>
     </form>
+  </>
   );
 };
 
-export default AnnounceForm1;
+export default ApplicantForm1;

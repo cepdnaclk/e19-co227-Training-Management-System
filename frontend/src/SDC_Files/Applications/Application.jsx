@@ -1,10 +1,8 @@
 import {useParams} from "react-router-dom";
 import {useState} from "react";
 import {useEffect} from "react";
-
 import {FiLogIn} from "react-icons/fi";
-
-import logo from "../Components/Images/UOPlogo.png";
+import logo from "./../../Components/Images/UOPlogo.png";
 
 const Application = () => {
   const {course_id, applicant_id} = useParams();
@@ -13,7 +11,7 @@ const Application = () => {
   const getApplications = async () => {
     try {
       const response = await fetch(
-        `http://localhost:8080/application/get/${course_id}/${applicant_id}`
+        'http://localhost:8080/application/get/' + course_id + '/' + applicant_id
       );
 
       if (response.ok) {
@@ -104,8 +102,8 @@ const Application = () => {
                     <label className="inline-block mb-2 text-sm font-medium text-gray-900">
                       Designation :
                     </label>
-                    <span className="text-sm font-medium text-gray-900 inline-block">
-                      {application.qualification}
+                    <span className="w-full bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5">
+                      {(application && application.sdcApplicant) ? application.sdcApplicant.designation : null}
                     </span>
                   </div>
 
@@ -114,19 +112,18 @@ const Application = () => {
                       Applicant Name :
                     </label>
                     <span className="w-full bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5">
-                      {application.sdcApplicant.name}
+                      {(application && application.sdcApplicant)?(application.sdcApplicant.name):null}
                     </span>
                   </div>
                 </div>
 
-                {/* Designation and Name */}
                 <div className="flex">
                   <div className="w-1/2 mr-2">
                     <label className="inline-block mb-2 text-sm font-medium text-gray-900">
                       Email :
                     </label>
-                    <span className="text-sm font-medium text-gray-900 inline-block">
-                      {application.sdcApplicant.email}
+                    <span className="w-full bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5">
+                      {(application && application.sdcApplicant) ?application.sdcApplicant.email:null}
                     </span>
                   </div>
 
@@ -135,7 +132,7 @@ const Application = () => {
                       Selected Course Name :
                     </label>
                     <span className="w-full bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5">
-                      {application.mdlcourse.fullname}
+                      {(application && application.mdlCourse) ? application.mdlCourse.fullname:null}
                     </span>
                   </div>
                 </div>

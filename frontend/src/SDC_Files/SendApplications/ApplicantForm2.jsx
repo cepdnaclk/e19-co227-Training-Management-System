@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import { TbSend } from "react-icons/tb";
 
-import EmailTemplateToApplicants from "./EmailTemplateToApplicants";
+import EmailTemplateToApplicants from "../Templates/CardTemplateToApplicants";
 
 export default function ApplicantForm2({ applicationData, courseName }) {
   const mailSubject = `Requesting to enroll for the course: ${courseName}`
@@ -46,19 +46,27 @@ Staff Development Center`
         console.error('POST error:', error);
       });
 
-   };
-  
+  };
+
   return (
     <div>
-      <div className="flex flex-wrap pt-5">
+      <p className="text-xl text-gray-700 font-bold mb-2">Applicants:</p>
+      <div className="flex flex-col mt-0 pt-0">
         {
           applicationData && applicationData.map((e, index) => (
-             <EmailTemplateToApplicants key={index} mailSubject={mailSubject} mailbody={generateMailbody(e.applicantName, e.link)} receiverName={e.applicantName} receiverMail={e.applicantEmail}/>
+            <EmailTemplateToApplicants
+              key={index}
+              course={courseName}
+              id={e.id}
+              link={e.link}
+              receiverName={e.applicantName}
+              receiverMail={e.applicantEmail}
+            />
           ))
         }
       </div>
 
-      <div className="text-right">
+      <div className="text-left">
         <button className="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded mt-4" onClick={sendMails}>
           <TbSend className="inline mr-2" />
           Send All
