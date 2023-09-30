@@ -19,6 +19,7 @@ const SDCNavbar = () => {
     { title: "2. Add Lecturers", path: "/sdc/applicant/save" },
     { title: "3. Prepare Applications", path: "/sdc/application/create" },
     { title: "4. Send Applications", path: "/sdc/invite" },
+    { title: "5. Applications", path: "/sdc/allApplications" },
   ];
 
   // Navigation
@@ -56,7 +57,7 @@ const SDCNavbar = () => {
             isMenuOpen ? "top-[12%]" : "top-[-100%]"
           } md:w-auto w-full flex items-center px-5`}
         >
-          <ul className="flex md:flex-row flex-col md:items-center md:gap-[4vw] gap-8">
+          <ul className="flex md:flex-row flex-col md:items-center md:gap-[2vw] gap-8">
             {NavMenus.map((Menu, index) => (
               <li
                 key={index}

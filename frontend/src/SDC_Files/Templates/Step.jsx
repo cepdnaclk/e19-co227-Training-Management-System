@@ -24,6 +24,12 @@ export const Step = () => {
         "The first mate and his Skipper too will do their very best to make the others comfortable in their tropic island nest. Michael Knight a young loner.",
       link: "http://localhost:5173/sdc/invite",
     },
+    {
+      title: "View Applications",
+      description:
+        "The first mate and his Skipper too will do their very best to make the others comfortable in their tropic island nest. Michael Knight a young loner.",
+      link: "http://localhost:5173/sdc/allApplications",
+    },
   ];
 
   return (

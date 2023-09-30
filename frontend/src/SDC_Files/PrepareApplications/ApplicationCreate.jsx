@@ -1,7 +1,10 @@
 // imports
+import axios from 'axios';
 import SDCNavbar from '../SDCNavbar'
 import { useEffect } from 'react';
 import { useState } from 'react';
+import { TbSend } from "react-icons/tb";
+import { useNavigate } from 'react-router-dom';
 
 // main function
 const ApplicationCreate = () => {
@@ -9,12 +12,34 @@ const ApplicationCreate = () => {
   const [selectedCourseId, setSelectedCourseId] = useState("");
   const [applicantsDoNotHaveApplications, setApplicantsDoNotHaveApplications] = useState([]);
   const [courses, setCourses] = useState([]);
+  const [selectedNames, setSelectedNames] = useState([]);
+  const [selectAll, setSelectAll] = useState(false);
+  const [applications, setApplications] = useState([]);
 
-  const handleCourseChange = (e) => {
-    setSelectedCourseId(e.target.value);
-    console.log(e.target.value)
-    getApplicants();
+  const navigate = new useNavigate();
+
+  const handleCourseChange = async (e) => {
+    const newCourseId = e.target.value;
+    setSelectedCourseId(newCourseId);
+    console.log(newCourseId); // Debugging: Check the new course ID
+
+    try {
+      const response = await fetch(
+        'http://localhost:8080/applicant/get/' + newCourseId,
+      );
+
+      if (response.ok) {
+        const jsonData = await response.json();
+        setApplicantsDoNotHaveApplications(jsonData);
+        console.log(jsonData);
+      } else {
+        console.error("Failed to fetch data");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
+
 
   const fetchCourses = async () => {
     try {
@@ -37,23 +62,62 @@ const ApplicationCreate = () => {
     }
   };
 
-  const getApplicants = async () => {
-    try {
-      const response = await fetch(
-        'http://localhost:8080/applicant/get/' + selectedCourseId,
-      );
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log('Form data submitted:', applications);
+    await axios.post('http://localhost:8080/application/save', applications);
+    window.location.reload();
+  };
 
-      if (response.ok) {
-        const jsonData = await response.json();
-        setApplicantsDoNotHaveApplications(jsonData);
-        console.log(jsonData);
-      } else {
-        console.error("Failed to fetch data");
-      }
-    } catch (error) {
-      console.error("Error:", error);
+  const handleNameChange = (e) => {
+    const name = e.target.value;
+    const applicant_id = e.target.getAttribute('data-id');
+    if (e.target.checked) {
+      setSelectedNames((prevSelected) => [...prevSelected, name]);
+      setApplications((prevApplications) => [...prevApplications, {
+                                                                    deanAccept: "false",
+                                                                    hodAccept: "false",
+                                                                    sdcApplicant: {
+                                                                      id: applicant_id
+                                                                    },
+                                                                    mdlCourse: {
+                                                                      id: selectedCourseId
+                                                                    }
+                                                                  }]);
+
+    } else {
+      setSelectedNames((prevSelected) =>
+        prevSelected.filter((n) => n !== name)
+      );
+      setApplications((prevApplications) =>
+        prevApplications.filter((selected) => selected.sdcApplicant.id !== applicant_id)
+      );
     }
   };
+
+  const handleSelectAll = () => {
+    if (selectAll) {
+      setSelectedNames([]);
+      setApplications([]);
+    } else {
+      // adding applications objects to array
+      const allApplicants = applicantsDoNotHaveApplications.map((applicant) => ({
+        deanAccept: "false",
+        hodAccept: "false",
+        sdcApplicant: {
+          id: applicant.id,
+        },
+        mdlCourse: {
+          id: selectedCourseId,
+        },
+      }));
+      setSelectedNames(applicantsDoNotHaveApplications.map((applicant) => applicant.name));
+      setApplications(allApplicants);
+    }
+    setSelectAll(!selectAll);
+  };
+
+  console.log(applicantsDoNotHaveApplications)
 
   useEffect(() => {
     fetchCourses();
@@ -90,18 +154,58 @@ const ApplicationCreate = () => {
           </select>
         </div>
 
+        
         <div>
           <label className="text-xl block text-gray-700 font-bold mb-2">
             Prepare Applications for:
           </label>
-          {selectedCourseId}
+          {/* For Debugging */}
+          {/* {selectedCourseId}
           {applicantsDoNotHaveApplications.map((applicant) => (
             <option key={applicant.id} value={applicant.id}>
               {applicant.id} {applicant.name} 
             </option>
-          ))}
+          ))} */}
         </div>
 
+        <div className="flex flex-col mt-0 pt-0">
+          {applicantsDoNotHaveApplications.map((name) => (
+            <div
+              key={name.name}
+              className="mb-2 p-2 bg-gray-800 rounded-md shadow-xl transition-transform transform hover:scale-105"
+            >
+              <label className="inline-flex items-center">
+                <input
+                  type="checkbox"
+                  className="form-checkbox h-5 w-5 text-blue-500"
+                  value={name.name}
+                  data-id={name.id}
+                  onChange={handleNameChange}
+                  checked={selectedNames.includes(name.name)}
+                />
+                <span className="ml-5 font-bold text-white">{name.name}</span>
+                <span className="ml-5 mt-0 text-blue-400">{name.email}</span>
+              </label>
+            </div>
+          ))}
+          <div className='text-left'>
+            <button
+              type="button"
+              className="bg-amber-600 hover:bg-amber-800 text-white font-bold py-2 px-4 rounded mt-4"
+              value="Select All"
+              onClick={handleSelectAll}
+            >
+              Select All
+            </button>
+            <button
+              className="bg-green-700 ml-3 hover:bg-green-900 text-white font-bold py-2 px-4 rounded mt-4"
+              onClick={handleSubmit}
+            >
+              <TbSend className="inline mr-2" />
+              Send
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 
