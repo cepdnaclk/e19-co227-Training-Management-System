@@ -21,7 +21,10 @@ function ApplicantSave() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log('Form data submitted:', formData);
-    await axios.post('http://localhost:8080/applicant/save', formData);
+    const response = await axios.post('http://localhost:8080/applicant/save', formData);
+    if(response.status == 200) {
+      alert('form subission successful !');
+    }
   };
 
   return (
@@ -40,7 +43,7 @@ function ApplicantSave() {
                 value={formData.name}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2 border rounded-md focus:ring focus:ring-blue-500"
+                className="w-full px-4 text-gray-800 font-bold py-2 border rounded-md focus:ring focus:ring-blue-500"
               />
             </div>
             <div className="mb-4">
@@ -52,7 +55,7 @@ function ApplicantSave() {
                 value={formData.email}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2 border rounded-md focus:ring focus:ring-blue-500"
+                className="w-full px-4 py-2 text-gray-800 font-bold border rounded-md focus:ring focus:ring-blue-500"
               />
             </div>
             <div className="mb-4">
@@ -64,7 +67,7 @@ function ApplicantSave() {
                 value={formData.designation}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2 border rounded-md focus:ring focus:ring-blue-500"
+                className="w-full px-4 py-2 text-gray-800 font-bold border rounded-md focus:ring focus:ring-blue-500"
               />
             </div>
             <div className="mb-4">
@@ -76,11 +79,11 @@ function ApplicantSave() {
                 value={formData.telephone}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2 border rounded-md focus:ring focus:ring-blue-500"
+                className="w-full px-4 py-2 text-gray-800 font-bold border rounded-md focus:ring focus:ring-blue-500"
               />
             </div>
             <div>
-              <button type="submit" className="w-1/4 bg-blue-500 font-bold text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-200">Submit</button>
+              <button type="submit" onClick={handleSubmit} className="w-1/4 bg-blue-400 font-bold text-white py-2 px-4 rounded hover:bg-blue-700">Submit</button>
             </div>
           </form>
         </div>

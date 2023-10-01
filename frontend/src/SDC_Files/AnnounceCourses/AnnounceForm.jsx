@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { TbSend } from "react-icons/tb";
 import axios from 'axios';
+import TileMapper from '../Templates/TileMapper';
 
 // main function
 const AnnounceForm1 = ({ onSubmit, dropdownCourses, facultyName, deanData, selectedDeanData }) => {
@@ -121,40 +122,20 @@ const AnnounceForm1 = ({ onSubmit, dropdownCourses, facultyName, deanData, selec
 
       <div>
         <p className="text-xl text-gray-700 font-bold mb-2">Select Faculties:</p>
-        <div className="flex flex-col mt-0 pt-0">
-          {deanData.map((name) => (
-            <div
-              key={name.id}
-              className="mb-2 p-2 bg-gray-800 rounded-md shadow-xl transition-transform transform hover:scale-105"
-            >
-              <label className="inline-flex items-center">
-                <input
-                  type="checkbox"
-                  className="form-checkbox h-5 w-5 text-blue-500"
-                  value={name.name}
-                  onChange={handleNameChange}
-                  checked={selectedNames.includes(name.name)}
-                />
-                <span className="ml-5 font-bold text-white">{name.name}</span>
-                <span className="ml-5 mt-0 text-blue-400">Dean - {name.deanname}</span>
-                <span className="ml-5 mt-0 text-blue-400">Email - {name.email}</span>
-              </label>
-            </div>
-          ))}
-        </div>
+        <TileMapper data={deanData} handleChange={handleNameChange} selected={selectedNames} />
       </div>
 
       <div className="text-left">
         <button
           type="button"
-          className="bg-amber-600 hover:bg-amber-800 text-white font-bold py-2 px-4 rounded mt-4"
+          className="bg-blue-600 text-white font-bold py-2 px-4 rounded mt-4 transition-colors duration-400 ease-in-out hover:bg-blue-800"
           value="Select All"
           onClick={handleSelectAll}
         >
-          Select All
+          {!selectAll ? "Select All" : "Deselect All"}
         </button>
         <button
-          className="bg-green-700 ml-3 hover:bg-green-900 text-white font-bold py-2 px-4 rounded mt-4"
+          className="bg-green-700 ml-3 text-white font-bold py-2 px-4 rounded mt-4 transition-colors duration-400 ease-in-out hover:bg-green-900"
           onClick={sendMails}
         >
           <TbSend className="inline mr-2" />

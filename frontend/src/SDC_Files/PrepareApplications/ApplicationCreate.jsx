@@ -66,7 +66,24 @@ const ApplicationCreate = () => {
     e.preventDefault();
     console.log('Form data submitted:', applications);
     await axios.post('http://localhost:8080/application/save', applications);
-    window.location.reload();
+    
+    try {
+      setSelectedNames([])
+      const response = await fetch(
+        'http://localhost:8080/applicant/get/' + selectedCourseId,
+      );
+
+      if (response.ok) {
+        const jsonData = await response.json();
+        setApplicantsDoNotHaveApplications(jsonData);
+        console.log(jsonData);
+      } else {
+        console.error("Failed to fetch data");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+
   };
 
   const handleNameChange = (e) => {
