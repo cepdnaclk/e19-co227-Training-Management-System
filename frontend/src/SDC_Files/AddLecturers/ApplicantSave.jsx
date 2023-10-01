@@ -1,13 +1,19 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SDCNavbar from '../SDCNavbar';
 
 function ApplicantSave() {
+
+  const [selectedFaculty, setSelectedFaculty] = useState("");
+  const [deanData, setDeanData] = useState([]);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     designation: '',
-    telephone: ''
+    telephone: '',
+    faculty: {
+      id: 0
+    }
   });
 
   const handleChange = (e) => {
@@ -16,6 +22,31 @@ function ApplicantSave() {
       ...formData,
       [name]: value,
     });
+  };
+
+  const handleFacultyChange = (e) => {
+    setSelectedFaculty(e.target.value);
+    formData.faculty.id = selectedFaculty;
+  };
+
+  console.log(selectedFaculty);
+
+  // fetch faculty details
+  const fetchDeanList = async () => {
+    try {
+      const responseDean = await fetch('http://localhost:8080/faculty/get');
+
+      if (responseDean.ok) {
+        const jsonDataDean = await responseDean.json();
+        setDeanData(jsonDataDean);
+        //console.log("Dean Data:", jsonDataDean)
+      } else {
+        console.error('Failed to fetch data');
+      }
+
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -27,6 +58,10 @@ function ApplicantSave() {
     }
   };
 
+  useEffect(() => {
+    fetchDeanList();
+  }, []);
+
   return (
     <>
       <SDCNavbar />
@@ -35,6 +70,24 @@ function ApplicantSave() {
         <div className="max-w-md mx-auto p-6 bg-gray-800 text-white rounded-lg shadow-md mt-5">
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
+              <label className="text-gray-100">
+                Select a faculty:
+              </label>
+              <select
+                className="block w-full text-gray-800 font-bold p-2 border rounded-lg"
+                value={selectedFaculty}
+                onChange={handleFacultyChange}
+                required
+              >
+                <option value="" disabled defaultValue className='font-bold'>
+                  Select a faculty
+                </option>
+                {deanData.map((faculty) => (
+                  <option key={faculty.id} value={faculty.id} className='font-bold'>
+                    {faculty.name}
+                  </option>
+                ))}
+              </select>
               <label htmlFor="name" className="block">Name:</label>
               <input
                 type="text"
