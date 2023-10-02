@@ -37,11 +37,11 @@ export const Step = () => {
       <div className="grid max-w-md mx-auto gap-6">
         {steps.map((step, index) => (
           <a key={index} href={step.link} className="block">
-            <div className="flex">
+            <div className="group flex">
               <div className="flex flex-col items-center mr-4">
                 <div className="w-px h-8 opacity-0 sm:h-full" />
                 <div>
-                  <div className="flex items-center justify-center w-6 h-6 text-xs font-bold border rounded-full">
+                  <div className="flex items-center group-hover:bg-amber-300 transition-color duration-500 ease-in-out justify-center w-6 h-6 text-xs font-bold border rounded-full">
                     {index + 1}
                   </div>
                 </div>
@@ -49,7 +49,7 @@ export const Step = () => {
               </div>
               <div className="flex flex-col pb-4 sm:items-center sm:flex-row sm:pb-0 transition-transform transform hover:scale-105">
                 <div className="sm:mr-3">
-                  <div className="flex items-center justify-center w-10 h-10 my-2 rounded-full bg-gray-800 sm:w-12 sm:h-12">
+                  <div className="flex items-center justify-center w-10 h-10 my-2 rounded-full bg-gray-800 group-hover:bg-amber-500 transition-color duration-300 ease-in-out sm:w-12 sm:h-12">
                     <svg
                       className="w-8 h-8 text-white sm:w-10 sm:h-10"
                       stroke="currentColor"

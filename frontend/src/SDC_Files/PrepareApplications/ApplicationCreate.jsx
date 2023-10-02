@@ -219,7 +219,7 @@ const ApplicationCreate = () => {
               onClick={handleSubmit}
             >
               <TbSend className="inline mr-2" />
-              Send
+              Prepare
             </button>
           </div>
         </div>

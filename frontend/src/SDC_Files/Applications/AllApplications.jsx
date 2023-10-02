@@ -75,6 +75,7 @@ const AllApplications = () => {
               />
               <span className="mx-5 font-bold text-white">Id - {application.id}</span>|
               <span className="mx-5 mt-0 text-blue-400">Course - {application.mdlCourse.fullname} (id:{application.mdlCourse.id})</span>|
+              <span className="mx-5 mt-0 text-blue-400">FacultyId - {(application.sdcApplicant.faculty.id != null) ? application.sdcApplicant.faculty.id : "-"}</span>|
               <span className="mx-5 mt-0 text-blue-400">Applicant - {application.sdcApplicant.name} (id:{application.sdcApplicant.id})</span>|
               <span className="mx-5 mt-0 text-blue-400">Start - {convertUnixToDateTime(application.mdlCourse.startdate).substring(0,10)}</span>|
               <span className="mx-5 mt-0 text-blue-400">Start - {convertUnixToDateTime(application.mdlCourse.enddate).substring(0, 10)}</span>
