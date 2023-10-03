@@ -1,10 +1,12 @@
 package com.moodle.backend.service;
 
+import com.moodle.backend.entity.sdc_applicant;
 import com.moodle.backend.entity.sdc_application;
 import com.moodle.backend.repository.sdc_application_repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,14 +19,27 @@ public class sdc_application_service_impl implements sdc_application_service {
     }
 
     @Override
-    public sdc_application save(sdc_application sdcApplication) {
-        sdcApplication.setLink("http://localhost:8080/application/get/" + sdcApplication.getMdlCourse().getId() + "/" + sdcApplication.getSdcApplicant().getId());
-        return sdcApplicationRepository.save(sdcApplication);
+    public String save(List<sdc_application> sdcApplications) {
+        for (sdc_application sdcApplication : sdcApplications) {
+            sdcApplication.setLink("http://localhost:5173/sdc/application/" + sdcApplication.getMdlCourse().getId() + "/" + sdcApplication.getSdcApplicant().getId());
+            sdcApplicationRepository.save(sdcApplication);
+        }
+        return "Save Successful";
     }
 
     @Override
-    public sdc_application getByCourseId(Long course_id) {
+    public List<sdc_application> getByCourseId(Long course_id) {
         return sdcApplicationRepository.findByMdlCourseId(course_id);
+    }
+
+    @Override
+    public List<sdc_applicant> getApplicantsByCourseId(Long course_id) {
+        List<sdc_application> sdcApplications = sdcApplicationRepository.findByMdlCourseId(course_id);
+        List<sdc_applicant> applicantsHaveApplications = new ArrayList<>();
+        for (sdc_application sdcApplication : sdcApplications) {
+            applicantsHaveApplications.add(sdcApplication.getSdcApplicant());
+        }
+        return applicantsHaveApplications;
     }
 
     @Override
@@ -40,8 +55,13 @@ public class sdc_application_service_impl implements sdc_application_service {
         sdcApplicationDB.setDeanAccept(sdcApplication.getDeanAccept());
         sdcApplicationDB.setMdlCourse(sdcApplication.getMdlCourse());
         sdcApplicationDB.setHodAccept(sdcApplication.getHodAccept());
-        sdcApplicationDB.setQualification(sdcApplication.getQualification());
         return sdcApplicationRepository.save(sdcApplicationDB);
+    }
+
+    @Override
+    public String delete(Long id) {
+        sdcApplicationRepository.deleteById(id);
+        return "deleted";
     }
 }
 

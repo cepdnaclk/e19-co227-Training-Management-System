@@ -7,19 +7,15 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class sdc_application {
+@NoArgsConstructor
+public class sdc_department {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-    Boolean deanAccept;
-    Boolean hodAccept;
-    String link;
-    @ManyToOne
-    sdc_applicant sdcApplicant;
-    @ManyToOne
-    mdl_course mdlCourse;
-    @Column(nullable = true, length = 64)
-    String bankSlip;
+    String name;
+    String hodName;
+    String email;
+    @ManyToOne(cascade = CascadeType.MERGE)
+    sdc_faculty faculty;
 }
