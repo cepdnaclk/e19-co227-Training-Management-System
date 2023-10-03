@@ -53,9 +53,18 @@ const SDCDashboard = () => {
   return (
     <>
       <SDCNavbar />
-      <div className="grid grid-cols-1 md:grid-cols-2">
+      <div className="grid bg-gray-200 grid-cols-1 md:grid-cols-2">
         <Step />
-        <div className="m-7 text-center">
+        <div className="text-center">
+          {/* <div className="inline-block mt-8">
+            <img
+              src={Logo}
+              width="100"
+              className="inline-block transform -translate-y-2"
+              alt="Logo"
+            />
+          </div> */}
+          <br />
           <span className="animate-pulse font-bold mt-0 text-7xl text-gray-600">SDC</span>
           <br />
           <span className="animate-pulse font-bold text-sm text-gray-700">Staff Development Centre</span>
