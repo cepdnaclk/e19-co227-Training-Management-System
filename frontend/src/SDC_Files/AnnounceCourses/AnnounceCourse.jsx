@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import AnnounceForm from "./AnnounceForm";
 import SDCNavbar from "../SDCNavbar";
+import { useNavigate } from "react-router-dom";
 
 // main function
 const AnnounceCourse = () => {
@@ -17,13 +18,24 @@ const AnnounceCourse = () => {
   const [facultyName, setfacultyName] = useState([]);
   const [selectedDeanData, setSelectedDeanData] = useState([]);
 
+  const navigate = new useNavigate();
+
   // functions
 
   // fetch new courses
   const fetchCourses = async () => {
     try {
-      const response = await fetch('http://localhost:8080/course/get');
-
+      const response = await fetch('http://localhost:8080/course/get', {method: 'GET', redirect:'follow', credentials:'include'});
+      if (response.redirected) {
+        document.location = response.url;
+      }
+      console.log(response.status);
+      if (response.status === 403) {
+        navigate('/sdc/unAuthorized');
+      }
+      else if (response.status === 404) {
+        navigate('/sdc/pageNotFound');
+      }
       if (response.ok) {
         const jsonData = await response.json();
         const courseNames = jsonData.map((item) => item.fullname);
@@ -41,8 +53,10 @@ const AnnounceCourse = () => {
   // fetch faculty details
   const fetchDeanList = async () => {
     try {
-      const responseDean = await fetch('http://localhost:8080/faculty/get');
-
+      const responseDean = await fetch('http://localhost:8080/faculty/get', { method: 'GET', redirect: 'follow', credentials: 'include' });
+      if (responseDean.redirected) {
+        document.location = responseDean.url;
+      }
       if (responseDean.ok) {
         const jsonDataDean = await responseDean.json();
         const facultyNames = jsonDataDean.map((item) => item.name);

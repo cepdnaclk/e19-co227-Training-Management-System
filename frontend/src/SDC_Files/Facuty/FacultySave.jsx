@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function FacultySave() {
   const [formData, setFormData] = useState({
@@ -7,6 +8,8 @@ function FacultySave() {
     email: '',
     deanname: ''
   });
+
+  const navigate = new useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,7 +22,7 @@ function FacultySave() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log('Form data submitted:', formData);
-    await axios.post('http://localhost:8080/faculty/save', formData);
+    await fetch('http://localhost:8080/faculty/save', { method: 'POST', headers: { 'Content-Type': 'application/json' }, credentials: 'include', body: JSON.stringify(formData) });
   };
 
   return (

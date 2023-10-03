@@ -10,6 +10,7 @@ import FacultySave from "./SDC_Files/Facuty/FacultySave";
 import ApplicantCreate from "./SDC_Files/PrepareApplications/ApplicationCreate";
 import PageNotFound404 from "./SDC_Files/PageNotFound404";
 import AllApplications from "./SDC_Files/Applications/AllApplications";
+import Unauthorized403 from "./SDC_Files/Unauthorized403";
 
 const App = () => {
   return (
@@ -27,6 +28,7 @@ const App = () => {
         <Route path="/sdc/faculty/save" element={<FacultySave />} />
         <Route path="/sdc/application/create" element={<ApplicantCreate />} />
         <Route path="/sdc/pageNotFound" element={<PageNotFound404 />} />
+        <Route path="/sdc/unAuthorized" element={<Unauthorized403 />} />
         <Route path="/sdc/allApplications" element={<AllApplications />} />
       </Routes>
     </>

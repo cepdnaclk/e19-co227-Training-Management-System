@@ -15,8 +15,17 @@ const ApplicationCreate = () => {
   const [selectedNames, setSelectedNames] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
   const [applications, setApplications] = useState([]);
+  const [searchInput, setSearchInput] = useState('');
+
 
   const navigate = new useNavigate();
+
+  const filterApplicants = () => {
+    return applicantsDoNotHaveApplications.filter((applicant) =>
+      applicant.name.toLowerCase().includes(searchInput.toLowerCase())
+    );
+  };
+
 
   const handleCourseChange = async (e) => {
     const newCourseId = e.target.value;
@@ -26,8 +35,16 @@ const ApplicationCreate = () => {
     try {
       const response = await fetch(
         'http://localhost:8080/applicant/get/' + newCourseId,
-      );
-
+        { method: 'GET', redirect: 'follow', credentials: 'include' });
+      if (response.redirected) {
+        document.location = response.url;
+      }
+      if (response.status === 403) {
+        navigate('/sdc/unAuthorized');
+      }
+      else if (response.status === 404) {
+        navigate('/sdc/pageNotFound');
+      }
       if (response.ok) {
         const jsonData = await response.json();
         setApplicantsDoNotHaveApplications(jsonData);
@@ -43,8 +60,16 @@ const ApplicationCreate = () => {
 
   const fetchCourses = async () => {
     try {
-      const response = await fetch('http://localhost:8080/course/get');
-
+      const response = await fetch('http://localhost:8080/course/get', { method: 'GET', redirect: 'follow', credentials: 'include' });
+      if (response.redirected) {
+        document.location = response.url;
+      }
+      if (response.status === 403) {
+        navigate('/sdc/unAuthorized');
+      }
+      else if (response.status === 404) {
+        navigate('/sdc/pageNotFound');
+      }
       if (response.ok) {
         const jsonData = await response.json();
         const courseNamesWithIds = jsonData.map((item) => ({
@@ -65,14 +90,22 @@ const ApplicationCreate = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log('Form data submitted:', applications);
-    await axios.post('http://localhost:8080/application/save', applications);
+    await fetch('http://localhost:8080/application/save', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body:JSON.stringify(applications), credentials: 'include' });
     
     try {
       setSelectedNames([])
       const response = await fetch(
         'http://localhost:8080/applicant/get/' + selectedCourseId,
-      );
-
+        { method: 'GET', redirect: 'follow', credentials: 'include' });
+      if (response.redirected) {
+        document.location = response.url;
+      }
+      if (response.status === 403) {
+        navigate('/sdc/unAuthorized');
+      }
+      else if (response.status === 404) {
+        navigate('/sdc/pageNotFound');
+      }
       if (response.ok) {
         const jsonData = await response.json();
         setApplicantsDoNotHaveApplications(jsonData);
@@ -184,9 +217,17 @@ const ApplicationCreate = () => {
             </option>
           ))} */}
         </div>
-
+        <div>
+          <input
+            type="text"
+            className="block w-1/2 p-2 border rounded-lg bg-gray-200 mb-4"
+            placeholder="Enter applicant name to search..."
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+          />
+        </div>
         <div className="flex flex-col mt-0 pt-0">
-          {applicantsDoNotHaveApplications.map((name) => (
+          {filterApplicants().map((name) => (
             <div
               key={name.name}
               className="mb-2 p-2 bg-gray-800 rounded-md shadow-xl transition-transform transform hover:scale-105"

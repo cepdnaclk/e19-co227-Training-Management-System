@@ -3,12 +3,17 @@ import { useEffect, useState } from 'react'
 import SDCNavbar from '../SDCNavbar'
 import axios from 'axios';
 import ConfirmationPopup from './../Templates/ConformationPopup';
+import { useNavigate } from 'react-router-dom';
 
 const AllApplications = () => {
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [applications, setApplications] = useState([]);
   const [applicationId, setApplicationId] = useState("");
+  const [courses ,setCourses] = useState([]);
+  const [selectedCourseId, setSelectedCourseId] = useState("");
+
+  const navigate = new useNavigate();
 
   const convertUnixToDateTime = (unixTimestamp) => {
     const date = new Date(unixTimestamp * 1000); // Multiply by 1000 to convert seconds to milliseconds
@@ -21,13 +26,19 @@ const AllApplications = () => {
     if (confirmed) {
       console.log('Deleted');
       try {
-        const response = await axios.delete(`http://localhost:8080/application/delete/${applicationId}`);
+        const response = await fetch(`http://localhost:8080/application/delete/${applicationId}`, { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, credentials: 'include'});
+        if (response.status === 403) {
+          navigate('/sdc/unAuthorized');
+        }
+        else if (response.status === 404) {
+          navigate('/sdc/pageNotFound');
+        }
         if (response.status === 200) {
           console.log('Application deleted successfully');
           // You can remove the console.log above and customize your success message as needed.
 
           // Refresh the applications by calling fetchApplications again
-          fetchApplications();
+          fetchApplications(selectedCourseId);
         }
       } catch (error) {
         console.error('Error deleting application:', error);
@@ -37,8 +48,55 @@ const AllApplications = () => {
     }
   };
 
-  const fetchApplications = async () => {
-    const response = await fetch('http://localhost:8080/application/get');
+  const handleCourseChange = async (e) => {
+    const newCourseId = e.target.value;
+    setSelectedCourseId(newCourseId);
+    console.log(newCourseId); // Debugging: Check the new course ID
+    fetchApplications(e.target.value);
+  };
+
+  // fetch new courses
+  const fetchCourses = async () => {
+    try {
+      const response = await fetch('http://localhost:8080/course/get_all', { method: 'GET', redirect: 'follow', credentials: 'include' });
+      if (response.redirected) {
+        document.location = response.url;
+      }
+      console.log(response.status);
+      if (response.status === 403) {
+        navigate('/sdc/unAuthorized');
+      }
+      else if (response.status === 404) {
+        navigate('/sdc/pageNotFound');
+      }
+      if (response.ok) {
+        const jsonData = await response.json();
+        const courseNamesWithIds = jsonData.map((item) => ({
+          id: item.id,
+          name: item.fullname,
+        }));
+        setCourses(courseNamesWithIds);
+        //console.log("CourseData:",courseNames)
+      } else {
+        console.error('Failed to fetch data');
+      }
+
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+  const fetchApplications = async (selectedCourseId) => {
+    const response = await fetch('http://localhost:8080/application/get/' + selectedCourseId, { method: 'GET', redirect: 'follow', credentials: 'include' });
+    if (response.redirected) {
+      document.location = response.url;
+    }
+    if (response.status === 403) {
+      navigate('/sdc/unAuthorized');
+    }
+    else if (response.status === 404) {
+      navigate('/sdc/pageNotFound');
+    }
     if (response.ok) {
       const jsonData = await response.json();
       setApplications(jsonData);
@@ -52,7 +110,8 @@ const AllApplications = () => {
   }
 
   useEffect(() => {
-    fetchApplications();
+    // fetchApplications();
+    fetchCourses();
   }, [])
 
   return (<>
@@ -62,6 +121,27 @@ const AllApplications = () => {
         Applications
       </h1>
       <div className="flex flex-col mt-0 pt-0">
+        <div className="mb-4">
+          <label className="text-xl block text-gray-700 font-bold mb-2">
+            Select a course:
+          </label>
+
+          <select
+            className="block w-full p-2 border rounded-lg"
+            value={selectedCourseId}
+            onChange={handleCourseChange}
+            required
+          >
+            <option value="" disabled defaultValue>
+              Select a course (all corses are listed here other than tne upcomming courses)
+            </option>
+            {courses.map((course) => (
+              <option key={course.id} value={course.id}>
+                {course.name}
+              </option>
+            ))}
+          </select>
+        </div>
         {applications.map((application) => (
           <div
             key={application.id}

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 const ConfirmationPopup = ({ isOpen, onClose, onConfirm }) => {
   return (
     <div className={`fixed top-0 left-0 w-full text-center h-full flex items-center justify-center ${isOpen ? '' : 'hidden'}`}>
-      <div className="bg-amber-100 p-4 rounded-lg shadow-md w-1/3">
+      <div className="bg-gray-200 p-4 rounded-lg shadow-md w-1/3">
         <p className='font-bold'>Confirming this action will delete the application. Press 'Cancel' if you wish to avoid deletion.</p>
         <div className="mt-4 flex justify-end">
           <button

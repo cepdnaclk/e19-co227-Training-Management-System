@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import SDCNavbar from "../SDCNavbar";
 import ApplicantForm1 from "./ApplicantForm1";
 import ApplicantForm2 from "./ApplicantForm2";
+import { useNavigate } from "react-router-dom";
 
 export default function SendApplications() {
 
@@ -18,6 +19,8 @@ export default function SendApplications() {
     selectedNames: [],
   });
 
+  const navigate = new useNavigate();
+
   useEffect(() => {
     fetchCourses();
   }, []);
@@ -29,8 +32,16 @@ export default function SendApplications() {
   // Take all the courses from the backend and store courses along with course id
   const fetchCourses = async () => {
     try {
-      const response = await fetch("http://localhost:8080/course/get");
-
+      const response = await fetch("http://localhost:8080/course/get", { method: 'GET', redirect: 'follow', credentials: 'include' });
+      if (response.redirected) {
+        document.location = response.url;
+      }
+      if (response.status === 403) {
+        navigate('/sdc/unAuthorized');
+      }
+      else if (response.status === 404) {
+        navigate('/sdc/pageNotFound');
+      }
       if (response.ok) {
         const jsonData = await response.json();
         const courseData = jsonData.map((item) => ({
@@ -48,8 +59,16 @@ export default function SendApplications() {
 
   const fetchApplicants = async () => {
     try {
-      const response = await fetch("http://localhost:8080/applicant/get");
-
+      const response = await fetch("http://localhost:8080/applicant/get", { method: 'GET', redirect: 'follow', credentials: 'include' });
+      if (response.redirected) {
+        document.location = response.url;
+      }
+      if (response.status === 403) {
+        navigate('/sdc/unAuthorized');
+      }
+      else if (response.status === 404) {
+        navigate('/sdc/pageNotFound');
+      }
       if (response.ok) {
         const jsonData = await response.json();
         // console.log(jsonData)
@@ -88,7 +107,10 @@ export default function SendApplications() {
 
   const fetchApplication = async (courseIDValue) => {
     try {
-      const response = await fetch(`http://localhost:8080/application/get/${courseIDValue}`);
+      const response = await fetch(`http://localhost:8080/application/get/${courseIDValue}`, { method: 'GET', redirect: 'follow', credentials: 'include' });
+      if (response.redirected) {
+        document.location = response.url;
+      }
 
       if (response.ok) {
         const jsonData = await response.json();

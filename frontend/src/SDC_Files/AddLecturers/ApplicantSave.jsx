@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import SDCNavbar from '../SDCNavbar';
+import { useNavigate } from 'react-router-dom';
 
 function ApplicantSave() {
 
@@ -22,6 +23,8 @@ function ApplicantSave() {
     }
   });
 
+  const navigate = new useNavigate();
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -34,14 +37,19 @@ function ApplicantSave() {
     setSelectedFaculty(e.target.value);
     formData.faculty.id = e.target.value;
     try {
-      const responseHod = await fetch('http://localhost:8080/department/get/' + e.target.value);
-      const responseLec = await fetch('http://localhost:8080/applicant/get_by_fac/' + e.target.value);
-
+      const responseHod = await fetch('http://localhost:8080/department/get/' + e.target.value, { method: 'GET', redirect: 'follow', credentials: 'include' });
+      if (responseHod.redirected) {
+        document.location = responseHod.url;
+      }
+      if (responseHod.status === 403) {
+        navigate('/sdc/unAuthorized');
+      }
+      else if (responseHod.status === 404) {
+        navigate('/sdc/pageNotFound');
+      }
       if (responseHod.ok) {
         const jsonDataHod = await responseHod.json();
         setHodData(jsonDataHod);
-        const jsonDataLec = await responseLec.json();
-        setLecturerData(jsonDataLec);
         //console.log("Dean Data:", jsonDataDean)
       } else {
         console.error('Failed to fetch data');
@@ -52,9 +60,40 @@ function ApplicantSave() {
     }
   };
 
-  const handleDepartmentChange = (e) => {
+  const handleDepartmentChange = async (e) => {
     setselectedDepartment(e.target.value);
     formData.department.id = e.target.value;
+    const responseLec = await fetch('http://localhost:8080/applicant/get_by_fac_dep/' + selectedFaculty + '/' + e.target.value, { method: 'GET', redirect: 'follow', credentials: 'include' });
+    try {
+      if (responseLec.redirected) {
+        document.location = responseLec.url;
+      }
+      if (responseLec.status === 403) {
+        navigate('/sdc/unAuthorized');
+      }
+      else if (responseLec.status === 404) {
+        console.log(selectedDepartment)
+        navigate('/sdc/pageNotFound');
+      }
+      if (responseLec.ok) {
+        setLecturerData([]);
+        const jsonDataLec = await responseLec.json();
+        setLecturerData(jsonDataLec);
+        //console.log("Dean Data:", jsonDataDean)
+      } else {
+        console.error('Failed to fetch data');
+      }
+      if (responseHod.ok) {
+        const jsonDataHod = await responseHod.json();
+        setHodData(jsonDataHod);
+        //console.log("Dean Data:", jsonDataDean)
+      } else {
+        console.error('Failed to fetch data');
+      }
+
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
 
@@ -64,8 +103,16 @@ function ApplicantSave() {
   // fetch faculty details
   const fetchFacList = async () => {
     try {
-      const responseDean = await fetch('http://localhost:8080/faculty/get');
-
+      const responseDean = await fetch('http://localhost:8080/faculty/get', { method: 'GET', redirect: 'follow', credentials: 'include' });
+      if (responseDean.redirected) {
+        document.location = responseDean.url;
+      }
+      if (responseDean.status === 403) {
+        navigate('/sdc/unAuthorized');
+      }
+      else if (responseDean.status === 404) {
+        navigate('/sdc/pageNotFound');
+      }
       if (responseDean.ok) {
         const jsonDataDean = await responseDean.json();
         setDeanData(jsonDataDean);
@@ -82,7 +129,9 @@ function ApplicantSave() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // console.log('Form data submitted:', formData);
-    const response = await axios.post('http://localhost:8080/applicant/save', formData);
+    const response = await fetch('http://localhost:8080/applicant/save', 
+    {method: 'POST', headers: {'Content-Type': 'application/json'}, credentials: 'include', body: JSON.stringify(formData)});
+    console.log(response.data);
     if (response.status == 200) {
       alert('form subission successful !');
     } else {
@@ -148,11 +197,11 @@ function ApplicantSave() {
         </div>
         <div className='grid grid-cols-1 gap-3 md:grid-cols-2'>
           <div>
-            <h1 className="text-2xl text-gray-800 font-bold mt-5 marker:mx-auto mb-3 text-center bg-amber-100 pt-2 pb-3 py-2 rounded-lg">Add New Lecturer</h1>
-            <div className="max-w-md mx-auto p-6 bg-gray-800 text-white rounded-lg shadow-md mt-5">
+            <h1 className="text-2xl font-bold mt-5 marker:mx-auto mb-3 text-center bg-amber-100 pt-2 pb-3 py-2 rounded-lg">Add New Lecturer</h1>
+            <div className="mx-auto p-6 bg-gray-800 text-white rounded-lg shadow-md mt-5">
               <form onSubmit={handleSubmit}>
                 <div className="mb-4">
-                  <label htmlFor="name" className="block">Name:</label>
+                  <label htmlFor="name" className="block text-gray-100 font-bold p-1">Name:</label>
                   <input
                     type="text"
                     id="name"
@@ -164,7 +213,7 @@ function ApplicantSave() {
                   />
                 </div>
                 <div className="mb-4">
-                  <label htmlFor="email" className="block">Email:</label>
+                  <label htmlFor="email" className="block text-gray-100 font-bold p-1">Email:</label>
                   <input
                     type="email"
                     id="email"
@@ -176,7 +225,7 @@ function ApplicantSave() {
                   />
                 </div>
                 <div className="mb-4">
-                  <label htmlFor="designation" className="block">Designation:</label>
+                  <label htmlFor="designation" className="block text-gray-100 font-bold p-1">Designation:</label>
                   <input
                     type="text"
                     id="designation"
@@ -188,7 +237,7 @@ function ApplicantSave() {
                   />
                 </div>
                 <div className="mb-4">
-                  <label htmlFor="telephone" className="block">Telephone:</label>
+                  <label htmlFor="telephone" className="block text-gray-100 font-bold p-1">Telephone:</label>
                   <input
                     type="text"
                     id="telephone"

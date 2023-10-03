@@ -1,4 +1,4 @@
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {useState} from "react";
 import {useEffect} from "react";
 import {FiLogIn} from "react-icons/fi";
@@ -8,12 +8,22 @@ const Application = () => {
   const {course_id, applicant_id} = useParams();
   const [application, setApplication] = useState(null);
 
+  const navigate = new useNavigate();
+
   const getApplications = async () => {
     try {
       const response = await fetch(
-        'http://localhost:8080/application/get/' + course_id + '/' + applicant_id
-      );
-
+        'http://localhost:8080/application/get/' + course_id + '/' + applicant_id, 
+        { method: 'GET', redirect: 'follow', credentials: 'include' });
+      if (response.redirected) {
+        document.location = response.url;
+      }
+      if (response.status === 403) {
+        navigate('/sdc/unAuthorized');
+      }
+      else if (response.status === 404) {
+        navigate('/sdc/pageNotFound');
+      }
       if (response.ok) {
         const jsonData = await response.json();
         setApplication(jsonData);

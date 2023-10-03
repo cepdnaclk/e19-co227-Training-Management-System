@@ -1,8 +1,4 @@
-import React, { useState, useEffect } from "react";
-import axios from 'axios';
-
 import { TbSend } from "react-icons/tb";
-
 import EmailTemplateToApplicants from "../Templates/CardTemplateToApplicants";
 
 export default function ApplicantForm2({ applicationData, courseName }) {
@@ -36,7 +32,7 @@ Staff Development Center`
 
     console.log(postData)
 
-    axios.post("http://localhost:8080/email/send", postData)
+    fetch("http://localhost:8080/email/send", { method: 'POST', headers: { 'Content-Type': 'application/json' }, credentials: 'include', body: JSON.stringify(postData) })
       .then(response => {
         console.log('POST response:', response.data);
         alert("Mails Sent")

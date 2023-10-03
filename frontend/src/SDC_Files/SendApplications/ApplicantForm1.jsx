@@ -1,4 +1,3 @@
-import axios from "axios";
 import React from "react";
 import {useState} from "react";
 
@@ -9,6 +8,7 @@ const ApplicantForm1 = ({onSubmit, dropdownCourses, applicants}) => {
 
   console.log(applicants);
   const names = applicants;
+
 
   const handleNameChange = (e) => {
     const name = e.target.value;
