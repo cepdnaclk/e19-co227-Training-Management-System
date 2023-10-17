@@ -1,9 +1,6 @@
 package com.moodle.backend.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,4 +15,10 @@ public class sdc_applicant {
     Long id;
     String name;
     String email;
+    String designation;
+    String telephone;
+    @ManyToOne
+    sdc_faculty faculty;
+    @ManyToOne
+    sdc_department department;
 }

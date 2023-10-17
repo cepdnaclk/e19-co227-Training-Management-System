@@ -37,4 +37,23 @@ public class Gen {
         }
         return 0;
     }
+
+    public static String dateGenerator(Long timestamp) {
+
+        // Create a Date object from the timestamp (multiply by 1000 to convert seconds
+        // to milliseconds)
+        Date date = new Date(timestamp * 1000);
+
+        // Define a date format for the output
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        // Format the date as a string
+        String formattedDate = sdf.format(date);
+
+        // Print the formatted date
+        System.out.println("Unix Timestamp: " + timestamp);
+        System.out.println("Formatted Date: " + formattedDate);
+
+        return formattedDate;
+    }
 }

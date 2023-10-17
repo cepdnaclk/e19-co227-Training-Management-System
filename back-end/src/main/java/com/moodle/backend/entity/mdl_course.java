@@ -23,25 +23,25 @@ public class mdl_course {
     @Column(name = "sortorder", columnDefinition = "BIGINT")
     private Long sortorder;
 
-    @Column(name = "fullname", columnDefinition = "VARCHAR")
+    @Column(name = "fullname", columnDefinition = "VARCHAR(255)")
     private String fullname;
 
-    @Column(name = "shortname", columnDefinition = "VARCHAR")
+    @Column(name = "shortname", columnDefinition = "VARCHAR(255)")
     private String shortname;
 
-    @Column(name = "idnumber", columnDefinition = "VARCHAR")
+    @Column(name = "idnumber", columnDefinition = "VARCHAR(255)")
     private String idnumber;
 
     @Column(name = "summary", columnDefinition = "LONGTEXT")
     private String summary;
 
-    @Column(name = "summaryformat", columnDefinition = "TINYINT")
+    @Column(name = "summaryformat", columnDefinition = "TINYINT(1)")
     private Integer summaryformat;
 
-    @Column(name = "format", columnDefinition = "VARCHAR")
+    @Column(name = "format", columnDefinition = "VARCHAR(255)")
     private String format;
 
-    @Column(name = "showgrades", columnDefinition = "TINYINT")
+    @Column(name = "showgrades", columnDefinition = "TINYINT(1)")
     private Integer showgrades;
 
     @Column(name = "newsitems", columnDefinition = "MEDIUMINT")
@@ -68,13 +68,13 @@ public class mdl_course {
     @Column(name = "showreports", columnDefinition = "SMALLINT")
     private int showreports;
 
-    @Column(name = "visible", columnDefinition = "TINYINT")
+    @Column(name = "visible", columnDefinition = "TINYINT(1)")
     private Integer visible;
 
-    @Column(name = "visibleold", columnDefinition = "TINYINT")
+    @Column(name = "visibleold", columnDefinition = "TINYINT(1)")
     private Integer visibleold;
 
-    @Column(name = "downloadcontent", columnDefinition = "TINYINT")
+    @Column(name = "downloadcontent", columnDefinition = "TINYINT(1)")
     private Integer downloadcontent;
 
     @Column(name = "groupmode", columnDefinition = "SMALLINT")
@@ -86,13 +86,13 @@ public class mdl_course {
     @Column(name = "defaultgroupingid", columnDefinition = "BIGINT")
     private Long defaultgroupingid;
 
-    @Column(name = "lang", columnDefinition = "VARCHAR")
+    @Column(name = "lang", columnDefinition = "VARCHAR(255)")
     private String lang;
 
-    @Column(name = "calendartype", columnDefinition = "VARCHAR")
+    @Column(name = "calendartype", columnDefinition = "VARCHAR(255)")
     private String calendartype;
 
-    @Column(name = "theme", columnDefinition = "VARCHAR")
+    @Column(name = "theme", columnDefinition = "VARCHAR(255)")
     private String theme;
 
     @Column(name = "timecreated", columnDefinition = "BIGINT")
@@ -101,13 +101,13 @@ public class mdl_course {
     @Column(name = "timemodified", columnDefinition = "BIGINT")
     private Long timemodified;
 
-    @Column(name = "requested", columnDefinition = "TINYINT")
+    @Column(name = "requested", columnDefinition = "TINYINT(1)")
     private Integer requested;
 
-    @Column(name = "enablecompletion", columnDefinition = "TINYINT")
+    @Column(name = "enablecompletion", columnDefinition = "TINYINT(1)")
     private Integer enablecompletion;
 
-    @Column(name = "completionnotify", columnDefinition = "TINYINT")
+    @Column(name = "completionnotify", columnDefinition = "TINYINT(1)")
     private Integer completionnotify;
 
     @Column(name = "cacherev", columnDefinition = "BIGINT")
@@ -116,12 +116,12 @@ public class mdl_course {
     @Column(name = "originalcourseid", columnDefinition = "BIGINT")
     private Long originalcourseid;
 
-    @Column(name = "showactivitydates", columnDefinition = "TINYINT")
+    @Column(name = "showactivitydates", columnDefinition = "TINYINT(1)")
     private Integer showactivitydates;
 
-    @Column(name = "showcompletionconditions", columnDefinition = "TINYINT")
+    @Column(name = "showcompletionconditions", columnDefinition = "TINYINT(1)")
     private Integer showcompletionconditions;
 
-    @Column(name = "pdfexportfont", columnDefinition = "VARCHAR")
+    @Column(name = "pdfexportfont", columnDefinition = "VARCHAR(255)")
     private String pdfexportfont;
 }

@@ -36,5 +36,12 @@ public class mdl_course_service_impl implements mdl_course_service {
 
         return courseList;
     }
+
+    @Override
+    public List<mdl_course> getAll() {
+        List<mdl_course> courses = mdlCourseRepository.findAll();
+        courses.remove(0); // avoid sending top-level course in moodle
+        return courses;
+    }
 }
 
