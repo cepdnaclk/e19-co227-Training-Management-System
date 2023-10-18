@@ -64,11 +64,13 @@ Design and develop an automation system that addresses the following specific ch
 ## Intended Users
 
 ### Participant
+Individuals looking to enroll in courses, engage with SDCs, and enhance their skills.
 
 ### Staff Development Centre
+The SDC is the central entity responsible for creating, organizing, and overseeing courses on the platform
 
 ### Resource Person
-
+Experienced professionals, mentors who conduct lectures for the participants
 ---
 
 ## Tech Stack
